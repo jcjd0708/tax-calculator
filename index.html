@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="calculator-container">
+            <div class="header-container">
+                <h1 class="header">Philippine Tax Calculator</h1>
+                <p class="header-text">
+                    Easily calculate your salary tax based on your income. 
+                    Get instant, clear results with no complex steps, 
+                    perfect for knowing your take-home pay anytime, anywhere.
+                </p>
+            </div>
+            <div class="main-container">
+                <form action="tax_calculator.php" method="POST" id="tax_form">
+                    <label for="salary-input"></label>
+                    <input type="number" name="salary" id="salary" placeholder="PHP 0.00" required>
+                    <label for="frequency">Salary Frequency</label>
+                    <select name="frequency" id="frequency">
+                        <option value="monthly">Monthy</option>
+                        <option value="annually">Annually</option>
+                        <option value="semi-monthly">Semi-monthly</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="daily">Daily</option>
+                    </select>
+                    <br>
+                    <label for="total_contribution">Total Contribution * </label>
+                    <input type="text" name="total_contribution" id="total_contribution" readonly placeholder="PHP 0.00" value="">
+                    <br>
+                    <label for="sss">SSS * </label>
+                    <input type="text" name="sss" id="sss" readonly placeholder="PHP 0.00" value="">
+                    <br>
+                    <label for="pagibig">Pag-ibig * </label>
+                    <input type="text" name="pagibig" id="pagibig" readonly placeholder="PHP 0.00" value="">
+                    <br>
+                    <label for="philhealth">Philhealth * </label>
+                    <input type="text" name="philhealth" id="philhealth" readonly placeholder="PHP 0.00" value="">
+                    <br>
+                    <label for="trainLaw">Estimated Income Tax * </label>
+                    <input type="text" name="trainLaw" id="trainLaw" readonly placeholder="PHP 0.00">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
