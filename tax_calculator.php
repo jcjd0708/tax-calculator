@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 
 function sssContribution($salary, $rate = 0.05) {
     if($salary < 0) {
@@ -123,7 +124,7 @@ function calculateTrainTax($taxableIncome) {
     
     $salaryRange = [
         ['min' => 0, 'max' => 20833, 'tax' => 0, 'rate' => 0],
-        ['min' => 20833, 'max' => 33332, 'tax' => 0, 'rate' => .15],
+        ['min' => 20834, 'max' => 33332, 'tax' => 0, 'rate' => .15],
         ['min' => 33333, 'max' => 66666, 'tax' => 1875, 'rate' => .2],
         ['min' => 66667, 'max' => 166666, 'tax' => 8541.80, 'rate' => .25],
         ['min' => 166667, 'max' => 666666, 'tax' => 33541.80, 'rate' => .3],
