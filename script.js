@@ -14,31 +14,7 @@ let addDeductions = document.querySelector("#addDeduction");
 addDeductions.addEventListener("click", (e) => {
     e.preventDefault();
 
-    const deductionDiv = document.createElement('div');
-    deductionDiv.className = "deduction-item";
-
-    const container = document.querySelector("#input-container");
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.placeholder = 'enter Deductions ...';
-    
-
-    const removeBtn = document.createElement("button");
-    removeBtn.type = "button";
-    removeBtn.textContent = "x";
-    removeBtn.addEventListener("click", () => {
-        removeButton(removeBtn);
-    })
-
-    deductionDiv.append(input, removeBtn);
-    container.appendChild(deductionDiv);
 });
-
-function removeButton(button) {
-    button.parentElement.remove();
-}
-
-
 
 
 function updateTax() {
