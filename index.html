@@ -20,7 +20,7 @@
             <div class="main-container">
                 <form action="tax_calculator.php" method="POST" id="tax_form">
                     <label for="salary-input"></label>
-                    <input type="number" name="salary" id="salary" placeholder="PHP 0.00" required>
+                    <input type="number" name="salary" id="salary" placeholder="PHP 0.00">
                     <label for="frequency">Salary Frequency</label>
                     <select name="frequency" id="frequency">
                         <option value="monthly">Monthy</option>
@@ -44,6 +44,9 @@
                     <br>
                     <label for="trainLaw">Estimated Income Tax * </label>
                     <input type="text" name="trainLaw" id="trainLaw" readonly placeholder="PHP 0.00">
+                    <br>
+                    <button id="addDeduction">+</button>
+                    <div id="input-container"></div>
                 </form>
             </div>
         </div>
