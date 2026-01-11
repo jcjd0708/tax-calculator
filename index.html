@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tax Calculator</title>
-    <script src="script.js" defer></script>
+    <script src="script.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -30,23 +30,42 @@
                         <option value="daily">Daily</option>
                     </select>
                     <br>
-                    <label for="total_contribution">Total Contribution * </label>
-                    <input type="text" name="total_contribution" id="total_contribution" readonly placeholder="PHP 0.00" value="">
+                    <label for="total_employee_contribution">Total Employee Contribution * </label>
+                    <input type="text" name="total_employee_contribution" id="total_employee_contribution" readonly placeholder="PHP 0.00" value="">
                     <br>
-                    <label for="sss">SSS * </label>
-                    <input type="text" name="sss" id="sss" readonly placeholder="PHP 0.00" value="">
+                    <label for="sss_employee">SSS Employee * </label>
+                    <input type="text" name="sss_employee" id="sss_employee" readonly placeholder="PHP 0.00" value="">
                     <br>
-                    <label for="pagibig">Pag-ibig * </label>
-                    <input type="text" name="pagibig" id="pagibig" readonly placeholder="PHP 0.00" value="">
+                    <label for="pagibig_employee">Pag-ibig Employee * </label>
+                    <input type="text" name="pagibig_employee" id="pagibig_employee" readonly placeholder="PHP 0.00" value="">
                     <br>
-                    <label for="philhealth">Philhealth * </label>
-                    <input type="text" name="philhealth" id="philhealth" readonly placeholder="PHP 0.00" value="">
+                    <label for="philhealth_employee">Philhealth Employee * </label>
+                    <input type="text" name="philhealth_employee" id="philhealth_employee" readonly placeholder="PHP 0.00" value="">
                     <br>
-                    <label for="trainLaw">Estimated Income Tax * </label>
-                    <input type="text" name="trainLaw" id="trainLaw" readonly placeholder="PHP 0.00">
+                    <label for="withholding_tax">Estimated Income Tax * </label>
+                    <input type="text" name="withholding_tax" id="withholding_tax" readonly placeholder="PHP 0.00" value="">
                     <br>
-                    <button id="addDeduction">+</button>
-                
+                    <label for="other_deductions">Other Deductions * </label>
+                    <input type="text" name="other_deductions" id="other_deductions" readonly placeholder="PHP 0.00" value="">
+                    <button type="button" id="addDeduction">+</button>
+                    <div id="input_container"></div>
+                    <br>
+                    <label for="net_pay">Net Pay * </label>
+                    <input type="text" name="net_pay" id="net_pay" readonly placeholder="PHP 0.00" value="">
+                    <div id="train-law-table-container" style="display: none;">
+                        <h3>Tax Breakdown</h3>
+                        <p><strong>Total Withholding Tax:</strong><span id="total-withholding-tax"></span></p>
+                        <p><strong>Taxable Income:</strong><span id="taxable-income"></span></p>
+                        <p><strong>Tax Bracket:</strong><span id="tax-bracket"></span></p>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <p><strong>Base Tax:</strong><span id="base-tax"></span></p>
+                        <p><strong>Excess Income:</strong><span id="income-excess"></span></p>
+                        <p><strong>Tax on Excess:</strong><span id="excess-tax"></span></p>
+                        
+                    </div>
                 </form>
             </div>
         </div>
