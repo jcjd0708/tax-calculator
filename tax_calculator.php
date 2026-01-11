@@ -235,7 +235,8 @@ function calculateTrainTax($taxableIncome) {
                 'taxRate' => ($rate * 100) . '%',
                 'incomeExcess' => $excess,
                 'excessTax' => $excessTax,
-                'bracket' => $bracketString
+                'bracket' => $bracketString,
+                'minTax' => $minTax
             ];
         }
     }

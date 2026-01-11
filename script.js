@@ -13,14 +13,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const taxBracket = document.getElementById("tax-bracket");
     const baseTax = document.getElementById('base-tax');
     const incomeExcess = document.getElementById('income-excess');
-    const taxRate = document.getElementById('tax-rate');
     const excessTax = document.getElementById('excess-tax');
-    const totalWithholdingTax = document.getElementById('total-withholding-tax');
-    const taxableIncome = document.getElementById('taxable-income');
+    const taxRate = document.getElementById('tax-rate');
+    const totalWithholdingTax = document.querySelectorAll('.total-withholding-tax');
+    const taxableIncome = document.querySelectorAll('.taxable-income');
     const trainLawTableContainer = document.getElementById('train-law-table-container');
-    
-
-    salary.addEventListener("input", updateTax);
+    const minTax = document.getElementById('min-tax');
+    let timer = 800;
+    let timeoutId;
+   
+    salary.addEventListener("input", () => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {updateTax()}, timer);
+    });
     frequency.addEventListener("change", updateTax);
 
     addDeduction.addEventListener("click", (e) => {
@@ -73,8 +78,14 @@ document.addEventListener("DOMContentLoaded", () => {
             otherDeductions.value = result.otherDeductions !== '' ? "₱ " + parseFloat(result.otherDeductions).toFixed(2) : '';
             netPay.value = result.netPay !== '' ? "₱ " + parseFloat(result.netPay).toFixed(2) : '';
             
-            totalWithholdingTax.textContent = '₱ ' + parseFloat(result.withholdingTax).toFixed(2);
-            taxableIncome.textContent = '₱ ' + parseFloat(result.taxableIncome).toFixed(2);
+            totalWithholdingTax.forEach(element => {
+                element.textContent = '₱ ' + parseFloat(result.withholdingTax).toFixed(2);
+            })
+
+            taxableIncome.forEach(element => {
+                element.textContent = '₱ ' + parseFloat(result.taxableIncome).toFixed(2);
+            })
+
 
             const salaryValue = parseFloat(formData.get('salary')) || 0;
             const netPayValue = parseFloat(result.netPay) || 0;
@@ -99,5 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
         baseTax.textContent = "₱ " + parseFloat(breakdownParam.baseTax).toFixed(2);
         incomeExcess.textContent = "₱ " + parseFloat(breakdownParam.incomeExcess).toFixed(2);
         excessTax.textContent = "₱ " + parseFloat(breakdownParam.excessTax).toFixed(2);
+        taxRate.textContent = breakdownParam.taxRate;
+        minTax.textContent =  parseFloat(breakdownParam.minTax).toFixed(2);
     }
+
+    
 })
