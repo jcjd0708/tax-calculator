@@ -34,7 +34,7 @@
                     <input type="text" name="total_employee_contribution" id="total_employee_contribution" readonly placeholder="PHP 0.00" value="">
                     <br>
                     <label for="sss_employee">SSS Employee * </label>
-                    <input type="text" name="sss_employee" id="sss_employee" readonly placeholder="PHP 0.00" value="">
+                    <input type="text" name="sss-employee" id="sss-employee" readonly placeholder="PHP 0.00" value="">
                     <br>
                     <label for="pagibig_employee">Pag-ibig Employee * </label>
                     <input type="text" name="pagibig_employee" id="pagibig_employee" readonly placeholder="PHP 0.00" value="">
@@ -54,18 +54,26 @@
                     <input type="text" name="net_pay" id="net_pay" readonly placeholder="PHP 0.00" value="">
                     <div id="train-law-table-container" style="display: none;">
                         <h3>Tax Breakdown</h3>
-                        <p><strong>Total Withholding Tax:</strong><span class="total-withholding-tax"></span></p>
-                        <p><strong>Taxable Income:</strong><span class="taxable-income"></span></p>
                         <p><strong>Tax Bracket:</strong><span id="tax-bracket"></span></p>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <p><span class="taxable-income"></span> - <span id="min-tax"></span></p>
+                        <p><span id="taxable-income-display"></span> - <span id="min-tax"></span></p>
                         <p><strong>Excess Income:</strong><span id="income-excess"></span> * <span id="tax-rate"></span></p>
                         <p><strong>Tax on Excess:</strong><span id="excess-tax"></span> + <span id="base-tax"></span></p>
-                        <p><strong>Total Withholding Tax:</strong><span class="total-withholding-tax"></span></p>
-                        
+                        <p><strong>Total Withholding Tax:</strong><span id="withholding-tax-display"></span></p>
+                    </div>
+                    <div id="sss-breakdown-container" style="display: none;">
+                        <h3>SSS breakdown</h3>
+                        <p> <span id="sss-employee-text"></span> + <span id="sss-employer-text"></span></p>
+                        <p> <span id="total-sss-contribution"></span> Total Contribution</p>
+                    </div>
+                    <div id="pagibig-breakdown-container" style="display: none;">
+                        <h3>Pag ibig breakdown</h3>
+                        <p> <span id="pagibig-employee-text"></span> + <span id="pagibig-employer-text"></span></p>
+                        <p> <span id="total-pagibig-contribution"></span></p>
+                    </div>
+                    <div id="philhealth-breakdown-container" style="display: none;">
+                        <h3>Philhealth breakdown</h3>
+                        <p> <span id="philhealth-employee-text"></span> + <span id="philhealth-employer-text"></span></p>
+                        <p> <span id="total-philhealth-contribution"></span></p>
                     </div>
                 </form>
             </div>
