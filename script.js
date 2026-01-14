@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
         philhealth : document.getElementById("philhealth_employee"),
         withholdingTax : document.getElementById("withholding_tax"),
         netPay : document.getElementById("net_pay"),
-        otherDeductions : document.getElementById("other_deductions")
+        otherDeductions : document.getElementById("other_deductions"),
+        totalDeductions : document.getElementById('total-deductions')
     }
 
     const sssBreakdown = {
@@ -43,11 +44,19 @@ document.addEventListener("DOMContentLoaded", () => {
         withholdingTax : document.getElementById('withholding-tax-display')
     }
 
+    const annualProjection = {
+        annualGross : document.getElementById('annual-gross'),
+        annualTax : document.getElementById('annual-tax'),
+        effectiveTaxRate : document.getElementById('effective-tax-rate'),
+        annualNetPay : document.getElementById('annual-net-pay')
+    }
+
     const container = {
         trainLaw : document.getElementById('train-law-table-container'),
         sss : document.getElementById('sss-breakdown-container'),
         pagibig : document.getElementById('pagibig-breakdown-container'),
-        philhealth : document.getElementById("philhealth-breakdown-container")
+        philhealth : document.getElementById("philhealth-breakdown-container"),
+        annualProjection : document.getElementById("annual-projection-container")
     }
     
     const DEBOUNCE_DELAYS = {
@@ -118,6 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 container.sss.style.display = 'none';
                 container.pagibig.style.display = 'none';
                 container.philhealth.style.display = 'none';
+                container.annualProjection.style.display = 'none';
+
                 if(netPayValue < 0) {
                     employeeBreakdown.netPay.style.color = 'red';
                 } else {
@@ -127,10 +138,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 container.sss.style.display = 'block';
                 container.pagibig.style.display = 'block';
                 container.philhealth.style.display = 'block';
+                container.annualProjection.style.display = 'block';
                 employeeBreakdown.netPay.style.color = 'black';
                 displaySssBreakdown(result);
                 displayPagibigBreakdown(result);
                 displayPhilhealthBreakdown(result);
+                displayAnnualProjection(result);
                 const taxableIncome = parseFloat(result.taxableIncome) || 0;
                 if(taxableIncome < 20833) {
                     container.trainLaw.style.display = 'none';
@@ -168,7 +181,8 @@ document.addEventListener("DOMContentLoaded", () => {
         employeeBreakdown.pagibig.value = result.pagibigEmployee !== '' ? formatCurrency(result.pagibigEmployee) : '';
         employeeBreakdown.withholdingTax.value = result.withholdingTax !== '' ? formatCurrency(result.withholdingTax) : '';
         employeeBreakdown.otherDeductions.value = result.otherDeductions !== '' ? formatCurrency(result.otherDeductions) : '';
-        employeeBreakdown.netPay.value = result.netPay !== '' ? formatCurrency(result.netPay) : '';  
+        employeeBreakdown.netPay.value = result.netPay !== '' ? formatCurrency(result.netPay) : '';
+        employeeBreakdown.totalDeductions.value = result.totalDeductions !== '' ? formatCurrency(result.totalDeductions) : '';  
     }
 
     function displayPagibigBreakdown(result) {
@@ -181,6 +195,14 @@ document.addEventListener("DOMContentLoaded", () => {
         philhealthBreakdown.employee.textContent = formatCurrency(result.philhealthEmployee);
         philhealthBreakdown.employer.textContent = formatCurrency(result.philhealthEmployer);
         philhealthBreakdown.total.textContent = formatCurrency(result.totalPhilhealthContribution);
+    }
+
+    function displayAnnualProjection(result) {
+        const projections = result.effectiveTaxRate;
+        annualProjection.annualGross.textContent = formatCurrency(projections.annualGross);
+        annualProjection.annualTax.textContent = formatCurrency(projections.annualTax);
+        annualProjection.effectiveTaxRate.textContent = parseFloat(projections.effectiveTaxRate).toFixed(2) + "%";
+        annualProjection.annualNetPay.textContent = formatCurrency(projections.annualNet);
     }
 
     function formatCurrency(value) {

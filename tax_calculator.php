@@ -1,9 +1,11 @@
 <?php
-
+// it gets the sss employee contribution based on salary input
 function sssEmployeeContribution($salary, $rate = 0.05) {
+    // checks if its more than zero. its a fallback so dont worry
     if($salary < 0) {
         return 0;
     }
+    // created a associative array to make a table based on 2025 tax table of sss.
     $salaryRange = [
         ['min' => 0, 'max' => 5249.99, 'msc' => 5000, 'mpf' => 0],
         ['min' => 5250, 'max' => 5749.99, 'msc' => 5500, 'mpf' => 0],
@@ -67,18 +69,25 @@ function sssEmployeeContribution($salary, $rate = 0.05) {
         ['min' => 34250, 'max' => 34749.99, 'msc' => 20000, 'mpf' => 725],
         ['min' => 34750, 'max' => INF, 'msc' => 20000, 'mpf' => 750]
     ];
+    // Loop through each salary bracket to find matching range
     foreach($salaryRange as $row) {
+        // if the salary is more than min AND if the salary is less than max row, 
+        // it returns the msc times the rate plus the mpf 
         if($salary >= $row['min'] && $salary <= $row['max']) {
             return $row['msc'] * $rate + $row['mpf'];
         }
     }
+    // a fallback
     return 0;
 }
 
+// it gets the sss employer contribution based on salary input
 function sssEmployerContribution($salary, $rate = 0.1) {
+    // same as above, a fallback
     if($salary < 0) {
         return 0;
     }
+    // again, a table for 2025 sss tax table but for employers
     $salaryRange = [
         ['min' => 0, 'max' => 5249.99, 'msc' => 5000, 'mpf' => 0, 'ec' => 10],
         ['min' => 5250, 'max' => 5749.99, 'msc' => 5500, 'mpf' => 0, 'ec' => 10],
@@ -143,6 +152,7 @@ function sssEmployerContribution($salary, $rate = 0.1) {
         ['min' => 34750, 'max' => INF, 'msc' => 20000, 'mpf' => 1500, 'ec' => 30]
     ];
     foreach($salaryRange as $row) {
+        // same as above, but this time, it has an additional key value of ec.
         if($salary >= $row['min'] && $salary <= $row['max']) {
             return $row['msc'] * $rate + $row['mpf'] + $row['ec'];
         }
@@ -150,32 +160,42 @@ function sssEmployerContribution($salary, $rate = 0.1) {
     return 0;
 }
 
+// it gets the philhealth employee contribution based on salary input
+// philhealth uses the same formula for employers.
 function philhealthContribution($salary, $rate = 0.05) {
     $min = 10000;
     $max = 100000;
+    // below minimum ; uses minimum rate
     if($salary <= $min) {
         return ($min * $rate) / 2;
     }
+    // within range ; uses salary as base
     if($salary <= $max) {
         return ($salary * $rate) / 2;
     } else {
+        // above maximum, uses maximum rate
         return ($max * $rate) / 2;
     }
 }
 
+// it gets the pagibig employee contribution based on salary input
 function pagibigEmployeeContributions($salary, $rate = 0.02) {
     $min = 1500;
     $max = 10000;
+    // below minimum; it uses salary as base and the rate inside if
     if($salary <= $min) {
         $rate = 0.01;
         return $salary * $rate;
+        // above maximum; it uses max as base and the rate inside param
     } else if ($salary > $max) {
         return $max * $rate;
     } else {
+        // within range : it uses salary as base and the rate inside param
         return $salary * $rate;
     }
 }
 
+// it gets the pagibig employer contribution based on salary input
 function pagibigEmployerContributions($salary, $rate = 0.02) {
     $max = 10000;
     if($salary > $max) {
@@ -185,7 +205,10 @@ function pagibigEmployerContributions($salary, $rate = 0.02) {
     }
 }
 
+// it converts salary frequency into monthly.
 function salaryConversion($salary, $frequency) {
+    // used associative array to create a table that calls the key 
+    // whenever they clicked the dropdown menu.
     $frequencyMap = [
         'semi-monthly' => 2,
         'weekly' => 4.333,
@@ -193,14 +216,18 @@ function salaryConversion($salary, $frequency) {
         'annually' => 1/12,
         'monthly' => 1
     ];
-
+    // Checks if frequency exists in the map and returns converted salary
+    // If frequency key exists, multiply salary by the conversion factor
     if(isset($frequencyMap[$frequency])) {
         return $salary * $frequencyMap[$frequency];
     }
+    // a fallback, incase there is a bug.
     return $salary;
 }
 
+// it calculates the tax based on taxable income.
 function calculateTrainTax($taxableIncome) {
+    // fallback
     if($taxableIncome < 0) {
         return [
             'withholdingTax' => 0,
@@ -210,7 +237,7 @@ function calculateTrainTax($taxableIncome) {
             'bracket' => 'Below Minimum'
         ];
     }
-    
+    // a table with key values 
     $salaryRange = [
         ['min' => 0, 'max' => 20833, 'tax' => 0, 'rate' => 0],
         ['min' => 20833, 'max' => 33332, 'tax' => 0, 'rate' => .15],
@@ -219,16 +246,24 @@ function calculateTrainTax($taxableIncome) {
         ['min' => 166667, 'max' => 666666, 'tax' => 33541.80, 'rate' => .3],
         ['min' => 666667, 'max' => INF, 'tax' => 183541.80, 'rate' => .35]
     ];
+    // loops thru each array as row
     foreach($salaryRange as $row) {
+        // same process in sss, if the $taxable income is more than min AND less than max, 
+        // it will give the value tax and rate associates to it
         if($taxableIncome >= $row['min'] && $taxableIncome <= $row['max']) {
             $rate = $row['rate'];
             $baseTax = $row['tax'];
             $minTax = $row['min'];
+            // excess gets the difference of taxable income and mintax
             $excess = $taxableIncome - $minTax;
+            // excess tax is the product of excess and rate
             $excessTax = $excess * $rate;
+            // withholdingtax is the sum of excesstax and basetax
             $withholdingTax = $excessTax + $baseTax;
+            // just a simple ternary operator that determines whether or not the MAX key is infinite or not
             $maxDisplay = $row['max'] == INF ? 'Above' : number_format($row['max']);
             $bracketString = '₱' . number_format($row['min']) . ' - ' . '₱' . $maxDisplay;
+            // returns the key value based on the if statement
             return [
                 'withholdingTax' => $withholdingTax,
                 'baseTax' => $baseTax,
@@ -240,6 +275,7 @@ function calculateTrainTax($taxableIncome) {
             ];
         }
     }
+    // a fallback
     return [
         'withholdingTax' => 0,
         'baseTax' => 0,
@@ -250,14 +286,39 @@ function calculateTrainTax($taxableIncome) {
     ];
 }
 
+// added a deduction function as requirements
 function otherDeductions() {
+    // sets the variable to 0
     $otherDeductions = 0;
+    // checks if it is set AND an array
     if(isset($_POST['deductions']) && is_array($_POST['deductions'])) {
+        // loops thru deductions array as deduction
         foreach($_POST['deductions'] as $deduction) {
+            // adds each deduction to other deductions.
             $otherDeductions += floatval($deduction);
         }
     }
+    // returns the sum(if theres any) of deduction
     return $otherDeductions;
+}
+
+// calculates the effective tax rate
+function calculateEffectiveTaxRate($monthly, $withholdingTax, $netPay) {
+    // converts these values into annually
+    $annualGross = $monthly * 12;
+    $annualTax = $withholdingTax * 12;
+    $annualNet = $netPay * 12;
+    // Fallback to 0 if monthly salary is 0 (avoid division by zero)
+    $effectiveTaxRate = $monthly > 0 ? ($annualTax / $annualGross) * 100 : 0;
+    // returns the key value
+    return [
+        'annualGross' => $annualGross,
+        'annualTax' => $annualTax,
+        'annualNet' => $annualNet,
+        'effectiveTaxRate' => $effectiveTaxRate
+    ];
+
+    
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -270,6 +331,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pagibigEmployee = pagibigEmployeeContributions($monthly);
     $otherDeductions = otherDeductions();
     $totalEmployeeContribution = $sssEmployee + $philhealthEmployee + $pagibigEmployee;
+   
 
     $sssEmployer = sssEmployerContribution($monthly);
     $philhealthEmployer = philhealthContribution($monthly);
@@ -283,9 +345,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $taxableIncome = $monthly - ($totalEmployeeContribution + $otherDeductions);
     $trainLawData = calculateTrainTax($taxableIncome);
     $withholdingTax = $trainLawData['withholdingTax'];
+    $totaldeductions = $totalEmployeeContribution + $otherDeductions + $withholdingTax;
     $netPay = $monthly - ($totalEmployeeContribution + $withholdingTax + $otherDeductions);
+    $effectiveTaxRateData = calculateEffectiveTaxRate($monthly, $withholdingTax, $netPay);
     
-    
+    // a simple fallback if the salary is less than or equal to 0
     if($salary <= 0) {
         echo json_encode([
             'monthly' => '',
@@ -307,7 +371,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         exit;
     }
-
+    // returns the key values as JSON response
     echo json_encode([
         'monthly' => $monthly,
         'sssEmployee' => $sssEmployee,
@@ -323,8 +387,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         'totalEmployerContribution' => $totalEmployerContribution,
         'taxableIncome' => $taxableIncome,
         'withholdingTax' => $withholdingTax,
+        'totalDeductions' => $totaldeductions,
         'otherDeductions' => $otherDeductions,
         'netPay' => $netPay,
-        'trainLawBreakdown' => $trainLawData
+        'trainLawBreakdown' => $trainLawData,
+        'effectiveTaxRate' => $effectiveTaxRateData
     ]);
 }

@@ -50,6 +50,8 @@
                     <button type="button" id="addDeduction">+</button>
                     <div id="input_container"></div>
                     <br>
+                    <label for="total-deductions">Total Deduction</label>
+                    <input type="text" name="total-deductions" id="total-deductions" readonly placeholder="PHP 0.00" value="">
                     <label for="net_pay">Net Pay * </label>
                     <input type="text" name="net_pay" id="net_pay" readonly placeholder="PHP 0.00" value="">
                     <div id="train-law-table-container" style="display: none;">
@@ -74,6 +76,13 @@
                         <h3>Philhealth breakdown</h3>
                         <p> <span id="philhealth-employee-text"></span> + <span id="philhealth-employer-text"></span></p>
                         <p> <span id="total-philhealth-contribution"></span></p>
+                    </div>
+                    <div id="annual-projection-container" style="display: none;">
+                        <h3>Annual projection</h3>
+                        <p>Annual Gross : <span id="annual-gross"></span></p>
+                        <p>Annual Tax : <span id="annual-tax"></span></p>
+                        <p>Effective Tax Rate : <span id="effective-tax-rate"></span></p>
+                        <p>Annual Net Pay : <span id="annual-net-pay"></span></p>
                     </div>
                 </form>
             </div>
