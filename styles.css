@@ -1,0 +1,118 @@
+:root {
+    --h1-text : 4rem;
+    --h2-text : 3.2rem;
+    --h3-text : 2.8rem;
+    --h4-text : 2.3rem;
+    --h5-text : 2rem;
+    --l-text : 1.6rem;
+    --p-text : 1.2rem;
+    --s-text : 1rem;
+    --xs-text : 0.8rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto, 'sans-serif ';
+}
+body {
+    font-size: 62.5%;
+}
+h2 {
+    font-size: var(--h5-text);
+}
+p {
+    font-size: var(--p-text);
+}
+.wrapper {
+    margin: 0 auto;
+    width: 1200px;
+    padding: 20px 10px;
+}
+/* HEADER SECTION */
+.header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 10px;
+}
+.header {
+    font-size: var(--h1-text);
+}
+.header-info {
+    font-size: var(--p-text);
+    text-align: center;
+}
+/* INPUT & FREQUENCY SECTION */
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 0.5rem;
+    margin-bottom: 10px;
+}
+.salary-section, .frequency-section {
+    display: flex;
+    align-items: center;
+}
+/* CONTRIBUTONS SECTION */
+.contributions-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+
+}
+.left-contributions, .right-contributions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+}
+.other-deductions-container {
+    justify-content: center;
+    align-items: start;
+}
+
+#input_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.deduction-row {
+    display: flex;
+    width: 100%;
+}
+.deduction-row input {
+    flex: 1;
+}
+.deduction-row button {
+    flex-shrink: 0;
+    padding: 5px 10px;
+}
+
+
+/* REUSABLE CLASSES */
+.title {
+    font-size: var(--p-text);
+}
+input, select {
+    width: 100%;
+    padding: 5px 10px;
+    font-size: var(--s-text);
+}
+
+.cntnr {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+}
+/* BUTTONS */
+.btn {
+    padding: 5px 10px;
+}

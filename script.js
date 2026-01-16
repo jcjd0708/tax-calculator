@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
         withholdingTax : document.getElementById("withholding_tax"),
         netPay : document.getElementById("net_pay"),
         otherDeductions : document.getElementById("other_deductions"),
-        totalDeductions : document.getElementById('total-deductions')
+        totalDeductions : document.getElementById('total-deductions'),
+        taxableIncome : document.getElementById('taxable-income'),
+        grossSalary : document.getElementById("gross-salary")
     }
 
     const sssBreakdown = {
@@ -60,42 +62,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     const DEBOUNCE_DELAYS = {
-        inputTimer : 800,
+        inputTimer : 500,
         changeTimer : 300
     }
 
     let timeoutId;
-   
-    salary.addEventListener("input", () => {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {updateTax()}, DEBOUNCE_DELAYS.inputTimer);
-    });
+    const TAX_EXEMPT_THRESHOLD = 20833;
 
-    frequency.addEventListener("change", () => {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {updateTax()}, DEBOUNCE_DELAYS.changeTimer)
-    });
-
+    salary.addEventListener("input", debounceUpdate(DEBOUNCE_DELAYS.inputTimer));
+    frequency.addEventListener("change", debounceUpdate(DEBOUNCE_DELAYS.changeTimer));
     addDeduction.addEventListener("click", (e) => {
         e.preventDefault();
 
         const inputContainer = document.getElementById("input_container");
         const deductionDiv = document.createElement("div");
+        deductionDiv.classList.add("deduction-row");
 
         const input = document.createElement("input");
         input.type = "number";
         input.name = "deductions[]";
         input.placeholder = "PHP 0.00";
-        input.addEventListener("input", () => {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {updateTax()}, DEBOUNCE_DELAYS.inputTimer);
-        });
+        input.addEventListener("input", debounceUpdate(DEBOUNCE_DELAYS.inputTimer));
         
         const removeBtn = document.createElement("button");
         removeBtn.type = "button";
         removeBtn.textContent = 'x';
         removeBtn.addEventListener("click", () => {
-            removeButton(removeBtn);
+            deductionDiv.remove();
             updateTax();
         })
 
@@ -103,9 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
         inputContainer.appendChild(deductionDiv);
     })
 
-    function removeButton(button) {
-        button.parentElement.remove();
-    }
 
     function updateTax() {
         const formData = new FormData(form);
@@ -119,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             displayMainBreakdown(result);
             
-            const salaryValue = parseFloat(formData.get('salary')) || 0;
+            const salaryValue = parseFloat(salary.value) || 0;
             const netPayValue = parseFloat(result.netPay) || 0;
 
             if(salaryValue <= 0 || netPayValue <= 0) {
@@ -144,8 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 displayPagibigBreakdown(result);
                 displayPhilhealthBreakdown(result);
                 displayAnnualProjection(result);
-                const taxableIncome = parseFloat(result.taxableIncome) || 0;
-                if(taxableIncome < 20833) {
+                const taxableIncome = parseFloat(result.taxableIncome);
+                if(taxableIncome < TAX_EXEMPT_THRESHOLD) {
                     container.trainLaw.style.display = 'none';
                 } else {
                     container.trainLaw.style.display = 'block';
@@ -175,14 +165,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function displayMainBreakdown(result) {
-        employeeBreakdown.total.value = result.totalEmployeeContribution !== '' ? formatCurrency(result.totalEmployeeContribution) : '';
-        employeeBreakdown.sss.value = result.sssEmployee !== '' ? formatCurrency(result.sssEmployee) : '';
-        employeeBreakdown.philhealth.value = result.philhealthEmployee !== '' ? formatCurrency(result.philhealthEmployee) : '';
-        employeeBreakdown.pagibig.value = result.pagibigEmployee !== '' ? formatCurrency(result.pagibigEmployee) : '';
-        employeeBreakdown.withholdingTax.value = result.withholdingTax !== '' ? formatCurrency(result.withholdingTax) : '';
-        employeeBreakdown.otherDeductions.value = result.otherDeductions !== '' ? formatCurrency(result.otherDeductions) : '';
-        employeeBreakdown.netPay.value = result.netPay !== '' ? formatCurrency(result.netPay) : '';
-        employeeBreakdown.totalDeductions.value = result.totalDeductions !== '' ? formatCurrency(result.totalDeductions) : '';  
+        employeeBreakdown.total.value = formatCurrency(result.totalEmployeeContribution);
+        employeeBreakdown.sss.value = formatCurrency(result.sssEmployee);
+        employeeBreakdown.philhealth.value = formatCurrency(result.philhealthEmployee);
+        employeeBreakdown.pagibig.value = formatCurrency(result.pagibigEmployee);
+        employeeBreakdown.withholdingTax.value = formatCurrency(result.withholdingTax);
+        employeeBreakdown.otherDeductions.value = formatCurrency(result.otherDeductions);
+        employeeBreakdown.netPay.value = formatCurrency(result.netPay);  
+        employeeBreakdown.taxableIncome.value = formatCurrency(result.taxableIncome);
+        employeeBreakdown.grossSalary.value = formatCurrency(salary.value);
     }
 
     function displayPagibigBreakdown(result) {
@@ -214,5 +205,13 @@ document.addEventListener("DOMContentLoaded", () => {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         })
+    }
+
+    function debounceUpdate(delay) {
+        let timer;
+        return () => {
+            clearTimeout(timer);
+            timer = setTimeout(updateTax, delay);
+        }
     }
 })

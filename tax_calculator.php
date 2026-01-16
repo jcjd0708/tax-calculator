@@ -162,7 +162,7 @@ function sssEmployerContribution($salary, $rate = 0.1) {
 
 // it gets the philhealth employee contribution based on salary input
 // philhealth uses the same formula for employers.
-function philhealthContribution($salary, $rate = 0.05) {
+function philhealthContribution($salary, $rate = 0.04) {
     $min = 10000;
     $max = 100000;
     // below minimum ; uses minimum rate
@@ -261,8 +261,8 @@ function calculateTrainTax($taxableIncome) {
             // withholdingtax is the sum of excesstax and basetax
             $withholdingTax = $excessTax + $baseTax;
             // just a simple ternary operator that determines whether or not the MAX key is infinite or not
-            $maxDisplay = $row['max'] == INF ? 'Above' : number_format($row['max']);
-            $bracketString = '₱' . number_format($row['min']) . ' - ' . '₱' . $maxDisplay;
+            $maxDisplay = $row['max'] == INF ? 'Above' : '₱' . number_format($row['max']);
+            $bracketString = '₱' . number_format($row['min']) . ' - '  . $maxDisplay;
             // returns the key value based on the if statement
             return [
                 'withholdingTax' => $withholdingTax,
@@ -332,7 +332,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $otherDeductions = otherDeductions();
     $totalEmployeeContribution = $sssEmployee + $philhealthEmployee + $pagibigEmployee;
    
-
     $sssEmployer = sssEmployerContribution($monthly);
     $philhealthEmployer = philhealthContribution($monthly);
     $pagibigEmployer = pagibigEmployerContributions($monthly);
@@ -345,7 +344,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $taxableIncome = $monthly - ($totalEmployeeContribution + $otherDeductions);
     $trainLawData = calculateTrainTax($taxableIncome);
     $withholdingTax = $trainLawData['withholdingTax'];
-    $totaldeductions = $totalEmployeeContribution + $otherDeductions + $withholdingTax;
     $netPay = $monthly - ($totalEmployeeContribution + $withholdingTax + $otherDeductions);
     $effectiveTaxRateData = calculateEffectiveTaxRate($monthly, $withholdingTax, $netPay);
     
@@ -387,7 +385,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         'totalEmployerContribution' => $totalEmployerContribution,
         'taxableIncome' => $taxableIncome,
         'withholdingTax' => $withholdingTax,
-        'totalDeductions' => $totaldeductions,
         'otherDeductions' => $otherDeductions,
         'netPay' => $netPay,
         'trainLawBreakdown' => $trainLawData,
