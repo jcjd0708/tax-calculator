@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
         employeeBreakdown.otherDeductions.value = formatCurrency(result.otherDeductions);
         employeeBreakdown.netPay.value = formatCurrency(result.netPay);  
         employeeBreakdown.taxableIncome.value = formatCurrency(result.taxableIncome);
-        employeeBreakdown.grossSalary.value = formatCurrency(salary.value);
+        employeeBreakdown.grossSalary.value = formatCurrency(monthly.value);
     }
 
     function displayPagibigBreakdown(result) {
