@@ -10,133 +10,186 @@
     <link rel="stylesheet" href="styles.css">
     <script src="./script.js" defer></script>
 </head>
-    <body>
-    
+<body>
     <div class="wrapper">
-        <div class="header-container">
-            <h1 class="header">Philippine Tax Calculator</h1>
-            <p class="header-info">
-                This calculator helps you estimate your income tax based on the current Philippine tax brackets.
-                Simply enter your salary and pay frequency to automatically compute your taxable income and estimated tax.
-            </p>
-        </div>
-        <div class="form-container">
+            
+        <header class="header">
+            <div class="header-card">
+                <h1 class="header-title">Philippine Tax Calculator</h1>
+                <p class="header-info">This calculator helps you estimate your income tax based on the current Philippine tax brackets. Simply enter your salary and pay frequency to automatically compute your taxable income and estimated tax.</p>
+            </div>
+        </header>
+
+        <main class="main">
             <form id="tax_form" method="POST" action="tax_calculator.php">
-                    <div class="input-container">   
-                        <!-- Salary -->
-                        <div class="salary-section">
-                            <label for="salary" class="title">Gross Salary</label>
-                            <input type="number" id="salary" name="salary" placeholder="PHP 0.00">
-                        </div>
+                
+                <!-- Salary Input Section -->
+                <section class="salary-inputs">
+                    <label for="salary">Gross Salary
+                        <input type="number" id="salary" name="salary" placeholder="PHP 0.00">
+                    </label>
 
-                        <div class="frequency-section">
-                            <label for="frequency" class="title">Salary Frequency </label>
-                            <select id="frequency" name="frequency">
-                                <option value="monthly">Monthly</option>
-                                <option value="annually">Annually</option>
-                                <option value="semi-monthly">Semi-monthly</option>
-                                <option value="weekly">Weekly</option>
-                                <option value="daily">Daily</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- Mandatory Contributions -->
-                    <div class="contributions-section">
-                        <div class="left-contributions">
-                            <h2>Other Deductions</h2>
-                            <!-- Other Deductions -->
-                             <p>Optional non-government deductions such as rent, loans, or insurance.</p>
-                            <button type="button" id="addDeduction" class="btn">+</button>
-                            <div id="input_container"></div>
-                        </div>
+                    <label for="frequency">Salary Frequency
+                        <select id="frequency" name="frequency">
+                            <option value="monthly">Monthly</option>
+                            <option value="annually">Annually</option>
+                            <option value="semi-monthly">Semi-monthly</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="daily">Daily</option>
+                        </select>
+                    </label>
+                </section>
+
+                <!-- Main Grid: Deductions & Computation -->
+                <section class="main-grid">
+                    
+                    <!-- Other Deductions -->
+                    <aside class="deductions">
+                        <h2>Other Deductions</h2>
+                        <p>Optional non-government deductions such as rent, loans, or insurance.</p>
+                        <button type="button" id="addDeduction">+</button>
+                        <div id="input_container"></div>
+                    </aside>
+                    
+                    <!-- Tax Computation -->
+                    <section class="computation">
+                        <h2>Tax Computation</h2>
                         
-                        <div class="right-contributions">
-                            <h2>Tax Computation</h2>
-                            
-                            <div class="gross-salary-container cntnr">
-                                <label for="gross-salary" class="title">Gross Salary</label>
-                                <input type="text" id="gross-salary" readonly placeholder="PHP 0.00">
-                            </div>
-                            <div class="sss-container cntnr">
-                                <label for="sss" class="title">SSS</label>
-                                <input type="text" id="sss-employee" readonly placeholder="PHP 0.00">
-                            </div>
-                            <div class="pagibig-container cntnr">
-                                <label for="pagibig" class="title">Pag-Ibig</label>
-                                <input type="text" id="pagibig_employee" readonly placeholder="PHP 0.00">
-                            </div>
-                            <div class="philhealth-container cntnr">
-                                <label for="philhealth" class="title">PhilHealth</label>
-                                <input type="text" id="philhealth_employee" readonly placeholder="PHP 0.00">
-                            </div>
-                            <div class="total-contributions cntnr">
-                                <label for="total-contributions" class="title">Total Contributions</label>
-                                <input type="text" id="total_employee_contribution" readonly placeholder="PHP 0.00">
-                            </div>
-                            <div class="other-deductions-container cntnr">
-                                <label for="other_deductions" class="title">Other Deductions total</label>
-                                <input type="text" id="other_deductions" readonly placeholder="PHP 0.00"> 
-                            </div>
-                            <!-- Totals -->
-                            <div class="taxable-income-container cntnr">
-                                <label for="taxable-income" class="title">Taxable Income</label>
-                                <input type="text" id="taxable-income" readonly placeholder="PHP 0.00">
-                            </div>
-                            <!-- Tax -->
-                            <div class="withholding-tax-container cntnr">
-                                <label for="withholding_tax" class="title">Withholding Tax</label>
-                                <input type="text" id="withholding_tax" readonly placeholder="PHP 0.00">
-                            </div>
-                            <div class="net-pay-container cntnr">
-                                <label for="net-pay-section" class="title">Net Pay</label>
-                                <input type="text" id="net_pay" readonly placeholder="PHP 0.00">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                        <label>Gross Salary
+                            <input type="text" id="gross-salary" readonly placeholder="PHP 0.00">
+                        </label>
 
-            <!-- TRAIN LAW -->
-            <div id="train-law-table-container" style="display:none;">
-                <span id="tax-bracket"></span>
-                <span id="base-tax"></span>
-                <span id="income-excess"></span>
-                <span id="excess-tax"></span>
-                <span id="tax-rate"></span>
-                <span id="min-tax"></span>
-                <span id="taxable-income-display"></span>
-                <span id="withholding-tax-display"></span>
-            </div>
+                        <label>SSS
+                            <input type="text" id="sss-employee" readonly placeholder="PHP 0.00">
+                        </label>
 
-            <!-- SSS -->
-            <div id="sss-breakdown-container" style="display:none;">
-                <span id="sss-employee-text"></span>
-                <span id="sss-employer-text"></span>
-                <span id="total-sss-contribution"></span>
-            </div>
+                        <label>Pag-Ibig
+                            <input type="text" id="pagibig_employee" readonly placeholder="PHP 0.00">
+                        </label>
 
-            <!-- PAG-IBIG -->
-            <div id="pagibig-breakdown-container" style="display:none;">
-                <span id="pagibig-employee-text"></span>
-                <span id="pagibig-employer-text"></span>
-                <span id="total-pagibig-contribution"></span>
-            </div>
+                        <label>PhilHealth
+                            <input type="text" id="philhealth_employee" readonly placeholder="PHP 0.00">
+                        </label>
 
-            <!-- PHILHEALTH -->
-            <div id="philhealth-breakdown-container" style="display:none;">
-                <span id="philhealth-employee-text"></span>
-                <span id="philhealth-employer-text"></span>
-                <span id="total-philhealth-contribution"></span>
-            </div>
+                        <label>Total Contributions
+                            <input type="text" id="total_employee_contribution" readonly placeholder="PHP 0.00">
+                        </label>
 
-            <!-- ANNUAL -->
-            <div id="annual-projection-container" style="display:none;">
-                <span id="annual-gross"></span>
-                <span id="annual-tax"></span>
-                <span id="effective-tax-rate"></span>
-                <span id="annual-net-pay"></span>
-            </div>
-        </div>
+                        <label>Other Deductions Total
+                            <input type="text" id="other_deductions" readonly placeholder="PHP 0.00"> 
+                        </label>
 
-    </body>
+                        <label>Taxable Income
+                            <input type="text" id="taxable-income" readonly placeholder="PHP 0.00">
+                        </label>
+
+                        <label>Withholding Tax
+                            <input type="text" id="withholding_tax" readonly placeholder="PHP 0.00">
+                        </label>
+
+                        <label class="net-pay">Net Pay
+                            <input type="text" id="net_pay" readonly placeholder="PHP 0.00">
+                        </label>
+                    </section>
+
+                </section>
+            </form>
+
+            <!-- Tax Breakdown (TRAIN Law) -->
+            <section id="train-law-table-container" class="breakdown" style="display:none;">
+                <h2>Tax Breakdown</h2>
+                <dl>
+                    <dt>Tax Bracket:</dt>
+                    <dd id="tax-bracket"></dd>
+                    
+                    <dt>Base Tax:</dt>
+                    <dd id="base-tax"></dd>
+                    
+                    <dt>Income Excess:</dt>
+                    <dd id="income-excess"></dd>
+                    
+                    <dt>Excess Tax:</dt>
+                    <dd id="excess-tax"></dd>
+                    
+                    <dt>Tax Rate:</dt>
+                    <dd id="tax-rate"></dd>
+                    
+                    <dt>Minimum Tax:</dt>
+                    <dd id="min-tax"></dd>
+                    
+                    <dt>Taxable Income:</dt>
+                    <dd id="taxable-income-display"></dd>
+                    
+                    <dt>Withholding Tax:</dt>
+                    <dd id="withholding-tax-display"></dd>
+                </dl>
+            </section>
+
+            <!-- SSS Breakdown -->
+            <section id="sss-breakdown-container" class="breakdown" style="display:none;">
+                <h2>SSS Contribution Breakdown</h2>
+                <dl>
+                    <dt>Employee Share:</dt>
+                    <dd id="sss-employee-text"></dd>
+                    
+                    <dt>Employer Share:</dt>
+                    <dd id="sss-employer-text"></dd>
+                    
+                    <dt>Total SSS:</dt>
+                    <dd id="total-sss-contribution"></dd>
+                </dl>
+            </section>
+
+            <!-- Pag-IBIG Breakdown -->
+            <section id="pagibig-breakdown-container" class="breakdown" style="display:none;">
+                <h2>Pag-IBIG Contribution Breakdown</h2>
+                <dl>
+                    <dt>Employee Share:</dt>
+                    <dd id="pagibig-employee-text"></dd>
+                    
+                    <dt>Employer Share:</dt>
+                    <dd id="pagibig-employer-text"></dd>
+                    
+                    <dt>Total Pag-IBIG:</dt>
+                    <dd id="total-pagibig-contribution"></dd>
+                </dl>
+            </section>
+
+            <!-- PhilHealth Breakdown -->
+            <section id="philhealth-breakdown-container" class="breakdown" style="display:none;">
+                <h2>PhilHealth Contribution Breakdown</h2>
+                <dl>
+                    <dt>Employee Share:</dt>
+                    <dd id="philhealth-employee-text"></dd>
+                    
+                    <dt>Employer Share:</dt>
+                    <dd id="philhealth-employer-text"></dd>
+                    
+                    <dt>Total PhilHealth:</dt>
+                    <dd id="total-philhealth-contribution"></dd>
+                </dl>
+            </section>
+
+            <!-- Annual Projection -->
+            <section id="annual-projection-container" class="breakdown" style="display:none;">
+                <h2>Annual Projection</h2>
+                <dl>
+                    <dt>Annual Gross Income:</dt>
+                    <dd id="annual-gross"></dd>
+                    
+                    <dt>Annual Tax:</dt>
+                    <dd id="annual-tax"></dd>
+                    
+                    <dt>Effective Tax Rate:</dt>
+                    <dd id="effective-tax-rate"></dd>
+                    
+                    <dt>Annual Net Pay:</dt>
+                    <dd id="annual-net-pay"></dd>
+                </dl>
+            </section>
+
+        </main>
+
+    </div>
+</body>
 </html>

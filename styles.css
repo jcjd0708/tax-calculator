@@ -1,118 +1,362 @@
 :root {
-    --h1-text : 4rem;
-    --h2-text : 3.2rem;
-    --h3-text : 2.8rem;
-    --h4-text : 2.3rem;
-    --h5-text : 2rem;
-    --l-text : 1.6rem;
-    --p-text : 1.2rem;
-    --s-text : 1rem;
-    --xs-text : 0.8rem;
+    --h1-text: 4.8rem;
+    --h2-text: 4.2rem;
+    --h3-text: 3.6rem;
+    --h4-text: 3rem;
+    --l-text: 2.4rem;
+    --m-text: 1.6rem;
+    --p-text: 1rem;
+    --s-text: 0.833rem;
+    --xs-text: 0.694rem;
+    
+    /* Color variables */
+    --primary-color: #5cb85c;
+    --secondary-color: #4caf50;
+    --border-color: #e0e0e0;
+    --bg-light: #f8f9fa;
+    --text-dark: #333;
+    --text-light: #666;
 }
 
 * {
     margin: 0;
     padding: 0;
+    font-family: Roboto, sans-serif;
     box-sizing: border-box;
-    font-family: Roboto, 'sans-serif ';
 }
+
+html {
+    font-size: 62.5%; /* 1rem = 10px */
+}
+
 body {
-    font-size: 62.5%;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
 }
-h2 {
-    font-size: var(--h5-text);
-}
-p {
-    font-size: var(--p-text);
-}
-.wrapper {
-    margin: 0 auto;
-    width: 1200px;
-    padding: 20px 10px;
-}
+
 /* HEADER SECTION */
-.header-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 10px;
-}
-.header {
-    font-size: var(--h1-text);
-}
-.header-info {
-    font-size: var(--p-text);
+header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 40px;
     text-align: center;
 }
-/* INPUT & FREQUENCY SECTION */
-.input-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 0.5rem;
-    margin-bottom: 10px;
+
+header h1 {
+    font-size: var(--h1-text);
+    font-weight: 700;
+    margin-bottom: 15px;
 }
-.salary-section, .frequency-section {
-    display: flex;
-    align-items: center;
+
+header p {
+    font-size: var(--m-text);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0.95;
 }
-/* CONTRIBUTONS SECTION */
-.contributions-section {
+
+/* MAIN SECTION */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+form {
+    padding: 40px;
+}
+
+/* SALARY INPUT SECTION */
+.salary-inputs {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-
+    gap: 20px;
+    margin-bottom: 30px;
 }
-.left-contributions, .right-contributions {
+
+.salary-inputs label {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-}
-.other-deductions-container {
-    justify-content: center;
-    align-items: start;
+    gap: 8px;
+    font-size: var(--m-text);
+    font-weight: 500;
+    color: var(--text-dark);
 }
 
-#input_container {
+.salary-inputs input,
+.salary-inputs select {
+    /* Reset default styles */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    
+    /* Consistent sizing */
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    height: 44px;
+    padding: 10px 15px;
+    
+    /* Typography */
+    font-family: inherit;
+    font-size: var(--m-text);
+    line-height: 1.5;
+    
+    /* Styling */
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background-color: white;
+    transition: all 0.3s ease;
 }
 
+.salary-inputs input:focus,
+.salary-inputs select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.1);
+}
+
+/* Add dropdown arrow for select */
+.salary-inputs select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+/* MAIN GRID SECTION */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+}
+
+/* DEDUCTIONS SECTION */
+.deductions {
+    background: var(--bg-light);
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.deductions h2 {
+    font-size: var(--l-text);
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.deductions p {
+    color: var(--text-light);
+    font-size: var(--m-text);
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.deductions button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.deductions button:hover {
+    background: #4caf50;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(92, 184, 92, 0.3);
+}
+
+/* Deduction rows */
 .deduction-row {
     display: flex;
-    width: 100%;
+    gap: 10px;
+    margin-bottom: 10px;
 }
+
 .deduction-row input {
     flex: 1;
+    padding: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    font-size: var(--m-text);
 }
+
 .deduction-row button {
-    flex-shrink: 0;
-    padding: 5px 10px;
+    width: 40px;
+    padding: 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: var(--m-text);
+    font-weight: 700;
+    margin: 0;
 }
 
-
-/* REUSABLE CLASSES */
-.title {
-    font-size: var(--p-text);
-}
-input, select {
-    width: 100%;
-    padding: 5px 10px;
-    font-size: var(--s-text);
+.deduction-row button:hover {
+    background: #c82333;
+    transform: none;
 }
 
-.cntnr {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-    width: 100%;
+/* COMPUTATION SECTION */
+.computation {
+    background: var(--bg-light);
+    padding: 25px;
+    border-radius: 12px;
 }
-/* BUTTONS */
-.btn {
-    padding: 5px 10px;
+
+.computation h2 {
+    font-size: var(--l-text);
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.computation label {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: var(--m-text);
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.computation label:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.computation input {
+    padding: 10px 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-light);
+    font-weight: 500;
+    color: var(--text-dark);
+    font-size: var(--m-text);
+}
+
+/* Highlighted fields */
+.computation label:has(#taxable-income),
+.computation label:has(#withholding_tax) {
+    background: linear-gradient(135deg, rgba(92, 184, 92, 0.1), rgba(76, 175, 80, 0.1));
+    border-left: 4px solid var(--primary-color);
+}
+
+/* Net Pay - Special styling */
+.computation .net-pay {
+    margin-top: 15px;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(92, 184, 92, 0.15), rgba(76, 175, 80, 0.15));
+    border-left: 4px solid var(--secondary-color);
+}
+
+.computation .net-pay {
+    font-size: var(--l-text);
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+.computation .net-pay input {
+    font-size: var(--l-text);
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+/* BREAKDOWN SECTIONS */
+.breakdown {
+    background: var(--bg-light);
+    padding: 30px;
+    margin: 20px 40px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.breakdown h2 {
+    font-size: var(--l-text);
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+
+.breakdown dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 15px 20px;
+    font-size: var(--m-text);
+}
+
+.breakdown dt {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.breakdown dd {
+    font-weight: 600;
+    color: var(--primary-color);
+    text-align: right;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    html {
+        font-size: 56.25%; /* Slightly smaller base */
+    }
+
+    body {
+        padding: 10px;
+    }
+
+    header {
+        padding: 30px 20px;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    .salary-inputs {
+        grid-template-columns: 1fr;
+    }
+
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .computation label {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .breakdown {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .breakdown dl {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .breakdown dd {
+        text-align: left;
+        margin-bottom: 15px;
+    }
 }
