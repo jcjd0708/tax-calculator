@@ -51,7 +51,7 @@ header h1 {
 
 header p {
     font-size: var(--m-text);
-    font-weight: 300;
+    font-weight: 600;
     line-height: 1.6;
     max-width: 800px;
     margin: 0 auto;
