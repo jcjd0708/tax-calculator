@@ -17,7 +17,7 @@ PHP 7.0 or higher
 
 Installation & Setup
 
-Clone or download this repository
+Clone or download this repository or open this with your browser directly https://phtaxcalproj.free.nf/
 Place the project folder in your XAMPP htdocs directory
 Start Apache server in XAMPP Control Panel
 Open your browser and navigate to http://localhost/tax-calculator
