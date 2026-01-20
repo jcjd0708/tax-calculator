@@ -42,7 +42,8 @@ PHP - Server-side logic and calculations
 HTML/CSS - User interface structure and styling
 JavaScript - Client-side interactions and output formatting
 
-Author
+Author  
+
 jcjd0708
 Bachelor of Science in Computer Science
 Colegio de San Pascual Baylon
