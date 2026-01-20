@@ -36,7 +36,7 @@ Annual projections and effective tax rate
 
 
 
-Technologies Used
+Language used
 
 PHP - Server-side logic and calculations
 HTML/CSS - User interface structure and styling
