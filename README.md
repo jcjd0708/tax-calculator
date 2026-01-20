@@ -44,6 +44,7 @@ JavaScript - Client-side interactions and output formatting
 
 Author  
 jcjd0708
+
 Bachelor of Science in Computer Science
 Colegio de San Pascual Baylon
 
